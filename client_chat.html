@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>chat </title>
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="//cdn.jsdelivr.net/sockjs/1.1/sockjs.min.js" type="text/javascript"></script>
+    <script src="centrifuge.js" type="text/javascript"></script>
+  </head>
+  <body>
+    <script type="text/javascript">
+    var centrifuge = new Centrifuge({
+        url: 'http://192.168.1.20:8000/connection',
+        user: "1",
+        timestamp: "1342323212",
+        token: "925c1b033ea7350ba6946e45bb7046909df312858ad945d5c4233deaf2dc0c76",
+        debug:true,
+        insecure:false
+    });
+
+    centrifuge.subscribe("ranmufei:chat", function(message) {
+        console.log("订阅news  通道：",message);
+    });
+
+    centrifuge.connect();
+
+    centrifuge.on('connect', function(context) {
+        console.log("content:",context)
+        // now client connected to Centrifugo and authorized
+    });
+
+    centrifuge.on('disconnect', function(context) {
+    // do whatever you need in case of disconnect from server
+      console.log("disconnect:",context)
+    });
+
+    centrifuge.on('error', function(error) {
+    // handle error in a way you want, here we just log it into browser console.
+    console.log("error:",error)
+    });
+
+    </script>
+  </body>
+</html>
